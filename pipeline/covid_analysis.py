@@ -1,4 +1,4 @@
-from pyspark.sql.functions import lower, col, sum
+from pyspark.sql.functions import lower, col, sum, explode, split
 
 def covid_ads(ads_clean):
 
@@ -11,6 +11,8 @@ def covid_ads(ads_clean):
 
 def covid_spending(ads_covid):
 
-    return ads_covid.agg(
+    spend_covid = ads_covid.agg(
         sum("spend_upper").alias("covid_spend")
     )
+
+    return spend_covid
