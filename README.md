@@ -16,7 +16,6 @@ The analysis explores how political organizations use Facebook advertisements by
 
 The project demonstrates how **distributed data processing with PySpark** can be used to analyze large-scale social media advertising datasets.
 
----
 
 # Dataset
 
@@ -59,6 +58,23 @@ Key fields used in the analysis include:
 | Pandas | Data transformation for visualization |
 | Matplotlib | Visualization |
 | Jupyter Notebook | Interactive analysis environment |
+
+
+## Data Processing Pipeline
+
+The analysis follows a distributed data processing pipeline using **Apache Spark**.
+
+1. Facebook Ad Library Dataset  
+2. University HPC Storage (HDFS)  
+3. Spark Data Loading  
+4. Data Cleaning & Deduplication  
+5. Text Tokenization  
+6. Keyword Frequency Analysis  
+7. Keyword Spending Analysis  
+8. Funding Entity & Page Analysis  
+9. COVID Campaign Analysis  
+10. CPM Calculation  
+11. Visualization
 
 # Key Analysis Steps
 
@@ -125,7 +141,6 @@ This visualization tracks the number of advertisements referencing COVID-19.
 ![CPM Distribution](images/cpm_distribution.png)
 
 This histogram shows the distribution of advertisement cost efficiency.
-
 
 
 # How to Run the Project
