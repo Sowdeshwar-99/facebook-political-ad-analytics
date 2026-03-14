@@ -2,7 +2,12 @@ from pyspark.sql.functions import col
 
 def keyword_frequency(word_df):
 
-    word_count = word_df.groupBy("word") \
+    word_filter = word_df.filter(
+        (col("word") != "") &
+        (~col("word").isin("the","and","to","a","of","is","in","on","for"))
+    )
+
+    word_count = word_filter.groupBy("word") \
         .count() \
         .orderBy("count", ascending=False)
 
