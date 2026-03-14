@@ -5,16 +5,20 @@ def clean_ads(datafile):
     ads = datafile.filter(
         (col("funding_entity").isNotNull()) &
         (col("page_name").isNotNull()) &
-        ((col("ad_creative_bodies").isNotNull()) |
-         (col("ad_creative_body").isNotNull()))
+        (
+            (col("ad_creative_bodies").isNotNull()) |
+            (col("ad_creative_body").isNotNull())
+        )
     )
 
     ads = ads.dropDuplicates(["id"])
 
     ads = ads.withColumn(
         "text_array",
-        when(col("ad_creative_bodies").isNotNull(), col("ad_creative_bodies"))
-        .otherwise(array(col("ad_creative_body")))
+        when(
+            col("ad_creative_bodies").isNotNull(),
+            col("ad_creative_bodies")
+        ).otherwise(array(col("ad_creative_body")))
     )
 
     ads_flat = ads.select(
@@ -26,16 +30,24 @@ def clean_ads(datafile):
         col("impressions.upper_bound").cast("int").alias("impressions_upper")
     )
 
-    ads_clean = ads_flat.filter((col("ad_text") != "") & col("ad_text").isNotNull())
+    ads_clean = ads_flat.filter(
+        (col("ad_text") != "") &
+        col("ad_text").isNotNull()
+    )
 
     return ads_clean
 
 
-def tokenize_ads(ads_clean):
+def split_words(ads_clean):
 
     ads_split = ads_clean.withColumn(
         "word",
-        explode(split(lower(col("ad_text")), "\\W+"))
+        explode(
+            split(
+                lower(col("ad_text")),
+                "\\W+"
+            )
+        )
     )
 
     return ads_split
